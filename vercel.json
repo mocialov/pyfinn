@@ -7,7 +7,4 @@
   "routes": [
     { "src": "/(.*)", "dest": "/api/wsgi.py" }
   ],
-  "functions": {
-    "api/wsgi.py": { "runtime": "python3.12" }
-  }
 }

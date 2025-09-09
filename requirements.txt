@@ -1,0 +1,7 @@
+beautifulsoup4
+fake-useragent
+flask
+gunicorn
+lxml
+redis
+requests

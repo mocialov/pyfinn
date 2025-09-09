@@ -4,10 +4,12 @@ from typing import Optional
 
 import redis
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 from pyfinn import fetch_ad, scrape_ad
 
 app = Flask(__name__)
+CORS(app)
 
 # Use REDIS_URL from environment so Vercel can point to a managed Redis service.
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")

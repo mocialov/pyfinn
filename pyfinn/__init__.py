@@ -63,6 +63,25 @@ def _scrape_viewings(html: BeautifulSoup) -> list[str]:
     return sorted(list(viewings))
 
 
+def _scrape_salgsoppgave(html: BeautifulSoup) -> str:
+    """Return URL to the full sales prospectus (salgsoppgave) if present.
+
+    Looks for an anchor element whose visible text matches
+    "Se komplett salgsoppgave" (case-insensitive, ignoring surrounding whitespace).
+    Returns empty string if not found.
+    """
+    # Find anchor by iterating instead of relying on exact match to be resilient
+    # against nested spans or additional whitespace.
+    for a in html.find_all("a"):
+        # Get combined textual content
+        text = a.get_text(strip=True)
+        if text and text.lower() == "se komplett salgsoppgave":
+            href = a.get("href", "")
+            if href:
+                return href
+    return ""
+
+
 def _calc_price(ad_data: dict) -> int:
     debt = ad_data.get("Fellesgjeld", 0)
     cost = ad_data.get("Omkostninger", 0)
@@ -95,6 +114,10 @@ def scrape_ad(html_text: str) -> dict:
 
     if "Totalpris" in ad_data:
         ad_data["Prisantydning"] = _calc_price(ad_data)
+
+    salgsoppgave_url = _scrape_salgsoppgave(html)
+    if salgsoppgave_url:
+        ad_data["SalgsoppgaveURL"] = salgsoppgave_url
 
     return ad_data
 

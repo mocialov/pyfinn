@@ -21,6 +21,7 @@ def test_scrape_ad(ad_html):
         "Postadresse": "Kirkegårdsgata 5, 0558 Oslo",
         "Prisantydning": 3245000,
         "Rom": 1,
+    "SalgsoppgaveURL": "https://partners.no/eiendom/3038743",
         "Soverom": 1,
         "Tomteareal": "271 (eiet)",
         "Totalpris": 3498163,
